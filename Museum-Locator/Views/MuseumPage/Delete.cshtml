@@ -1,0 +1,9 @@
+﻿@model Museum_Locator.Models.Museum
+
+<h2>Delete Museum</h2>
+<p>Are you sure you want to delete <strong>@Model.MuseumName</strong>?</p>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="MuseumId" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+</form>
+<a asp-action="List">Cancel</a>

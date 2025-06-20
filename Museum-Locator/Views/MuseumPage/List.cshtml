@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Museum_Locator.Models.Museum>
+
+<h2>All Museums</h2>
+<a asp-action="Create">Create New Museum</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Category</th>
+            <th>Details</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var museum in Model)
+        {
+            <tr>
+                <td>@museum.MuseumName</td>
+                <td>@museum.MuseumLocation</td>
+                <td>@museum.MuseumCategory</td>
+                <td>@museum.MuseumDetails</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@museum.MuseumId">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@museum.MuseumId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@museum.MuseumId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

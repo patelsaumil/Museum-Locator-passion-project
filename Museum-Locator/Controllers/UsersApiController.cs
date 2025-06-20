@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Museum_Locator.Data;
 using Museum_Locator.Models;
@@ -12,11 +7,11 @@ namespace Museum_Locator.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersApiController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersApiController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -35,22 +30,17 @@ namespace Museum_Locator.Controllers
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
-            {
                 return NotFound();
-            }
 
             return user;
         }
 
         // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.User_Id)
-            {
+            if (id != user.UserId) 
                 return BadRequest();
-            }
 
             _context.Entry(user).State = EntityState.Modified;
 
@@ -61,27 +51,22 @@ namespace Museum_Locator.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!UserExists(id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
             return NoContent();
         }
 
         // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.User_Id }, user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user); 
         }
 
         // DELETE: api/Users/5
@@ -90,9 +75,7 @@ namespace Museum_Locator.Controllers
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
-            {
                 return NotFound();
-            }
 
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
@@ -102,7 +85,7 @@ namespace Museum_Locator.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.User_Id == id);
+            return _context.Users.Any(e => e.UserId == id); 
         }
     }
 }

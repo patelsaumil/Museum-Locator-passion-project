@@ -5,13 +5,16 @@ namespace Museum_Locator.Models
     public class User
     {
         [Key]
-        public int User_Id { get; set; }
+        public int UserId { get; set; }
 
-        public required string Name { get; set; }
+        [Required]
+        public string Name { get; set; } = string.Empty;
 
-        public required string Email { get; set; }
+        [Required]
+        public string Email { get; set; } = string.Empty;
 
-        public required string Password { get; set; }
+        [Required]
+        public string Password { get; set; } = string.Empty;
 
         public ICollection<Feedback>? Feedbacks { get; set; }
     }

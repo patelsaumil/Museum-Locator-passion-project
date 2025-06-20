@@ -7,37 +7,42 @@ namespace Museum_Locator.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+            : base(options) { }
 
-        // Core DbSets
         public DbSet<Museum> Museums { get; set; }
-
-        // Use `new` only if your custom User class conflicts with IdentityUser
-        public new DbSet<User> Users { get; set; }
-
         public DbSet<Facility> Facilities { get; set; }
+        public DbSet<MuseumFacility> MuseumFacilities { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
-        public DbSet<Museum_Facility> Museum_Facilities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // Keep this!
+            base.OnModelCreating(modelBuilder);
 
-            // Configure many-to-many composite key
-            modelBuilder.Entity<Museum_Facility>()
-                .HasKey(mf => new { mf.Museum_Id, mf.Facility_Id });
+            modelBuilder.Entity<MuseumFacility>()
+                .HasKey(mf => mf.MuseumFacilityId);
 
-            modelBuilder.Entity<Museum_Facility>()
+            modelBuilder.Entity<MuseumFacility>()
                 .HasOne(mf => mf.Museum)
                 .WithMany(m => m.MuseumFacilities)
-                .HasForeignKey(mf => mf.Museum_Id);
+                .HasForeignKey(mf => mf.MuseumId);
 
-            modelBuilder.Entity<Museum_Facility>()
+            modelBuilder.Entity<MuseumFacility>()
                 .HasOne(mf => mf.Facility)
                 .WithMany(f => f.MuseumFacilities)
-                .HasForeignKey(mf => mf.Facility_Id);
+                .HasForeignKey(mf => mf.FacilityId);
+
+            modelBuilder.Entity<Feedback>()
+                .HasOne(f => f.Museum)
+                .WithMany(m => m.Feedbacks)
+                .HasForeignKey(f => f.MuseumId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Feedback>()
+                .HasOne(f => f.User)
+                .WithMany(u => u.Feedbacks)
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

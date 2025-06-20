@@ -1,0 +1,24 @@
+﻿@model Museum_Locator.Models.Museum
+
+<h2>Edit Museum</h2>
+<form asp-action="Edit">
+    <input type="hidden" asp-for="MuseumId" />
+    <div>
+        <label asp-for="MuseumName"></label>
+        <input asp-for="MuseumName" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="MuseumLocation"></label>
+        <input asp-for="MuseumLocation" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="MuseumCategory"></label>
+        <input asp-for="MuseumCategory" class="form-control" />
+    </div>
+    <div>
+        <label asp-for="MuseumDetails"></label>
+        <textarea asp-for="MuseumDetails" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<a asp-action="List">Back to List</a>

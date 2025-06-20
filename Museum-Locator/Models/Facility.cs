@@ -5,13 +5,11 @@ namespace Museum_Locator.Models
     public class Facility
     {
         [Key]
-        public int Facility_Id { get; set; }
+        public int FacilityId { get; set; }
 
-        public required string Facility_Name { get; set; }
+        [Required]
+        public string FacilityName { get; set; } = string.Empty;
 
-        public ICollection<Museum>? Museums { get; set; }
-
-        public ICollection<Museum_Facility>? MuseumFacilities { get; set; }
-
+        public ICollection<MuseumFacility> MuseumFacilities { get; set; } = new List<MuseumFacility>();
     }
 }

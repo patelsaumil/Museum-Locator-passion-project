@@ -1,0 +1,11 @@
+﻿@model Museum_Locator.Models.Museum
+
+<h2>Museum Details</h2>
+<p><strong>Name:</strong> @Model.MuseumName</p>
+<p><strong>Location:</strong> @Model.MuseumLocation</p>
+<p><strong>Category:</strong> @Model.MuseumCategory</p>
+<p><strong>Details:</strong> @Model.MuseumDetails</p>
+
+<a asp-action="Edit" asp-route-id="@Model.MuseumId">Edit</a> |
+<a asp-action="Delete" asp-route-id="@Model.MuseumId">Delete</a> |
+<a asp-action="List">Back to List</a>
